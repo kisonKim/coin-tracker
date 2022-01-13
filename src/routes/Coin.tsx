@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { Switch, Route, useLocation, useRouteMatch, Link } from 'react-router-dom';
+import { Switch, Route, useLocation, useRouteMatch, Link, useHistory } from 'react-router-dom';
 import Price from './Price'
 import Chart from './Chart'
+import { ArrowLeftCircle } from 'react-feather'
 import { useParams } from "react-router";
 import {Helmet} from 'react-helmet'
 import { useQuery } from 'react-query';
@@ -81,6 +82,8 @@ function Coin() {
   const {state} = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart"); 
+  const history = useHistory();
+
   const {isLoading: infoLoading, data:infoData} = useQuery<InfoData>(
       ["info",coinId], 
       ()=>fetchCoinInfo(coinId),
@@ -95,21 +98,6 @@ function Coin() {
         refetchInterval:5000
       }
     )
-  // const [loading, setLoading] = useState(true)
-  // const [info, setInfo] = useState<InfoData>()
-  // const [priceInfo, setPriceInfo] = useState<PriceData>()
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const infoData = await (await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)).json()
-  //     console.log(infoData)  
-  //     const priceData = await (await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)).json()
-  //     console.log(priceData)
-  //     setInfo(infoData)
-  //     setPriceInfo(priceData)
-  //     setLoading(false)
-  //   })()
-  // }, [coinId])
   const loading = infoLoading || tickersLoading
 
   return <Container>
@@ -118,11 +106,16 @@ function Coin() {
         {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
       </title>
     </Helmet>
-    <Header>
-      <Title>
-      {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-      </Title>
-    </Header>
+    <HeaderWrapper>
+      <Header>
+        <Title>
+        {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </Title>
+        <BackButton onClick={() => history.goBack()}>
+          <ArrowLeftCircle size={45} color='#9c88ff'/>
+        </BackButton>
+      </Header>
+    </HeaderWrapper>
     {loading ? 
       <Loader>Loading...</Loader> : 
       (<>
@@ -193,6 +186,21 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 `;
+
+const HeaderWrapper = styled.div`
+  position:relative;
+`;
+
+const BackButton = styled.button`
+  position:absolute;
+  top:50%;
+  left:0;
+  border:0;
+  outline:0;
+  cursor:pointer;
+  background:transparent;
+  transform:translate3d(0,-50%,0);
+`
 
 const Overview = styled.div`
   display: flex;

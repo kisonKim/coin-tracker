@@ -1,5 +1,7 @@
-# 뒤로가기 버튼 생성
+# Code Challenge
 
-# price 탭 커스텀
+- [x] 뒤로가기 버튼 생성
 
-# chart를 candlestick chart 로 변경
+- [ ] price 탭 커스텀
+
+- [ ] chart를 candlestick chart 로 변경
