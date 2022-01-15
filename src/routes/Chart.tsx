@@ -28,10 +28,10 @@ function Chart({coinId}:ChartProps) {
     <div>
       {
         isLoading ? "Loading chart..." : 
-        <ApexChart type="line" series={[
+        <ApexChart type="candlestick" series={[
           {
             name:'Price',
-            data:data?.map(item=>item.close)
+            data:data?.map(item=>([item.time_open,[item.open, item.high, item.low, item.close]]))
           },
         ]} 
         options={{
@@ -47,8 +47,8 @@ function Chart({coinId}:ChartProps) {
           yaxis:{show:false},
           xaxis:{
             axisBorder:{show:false},
-            axisTicks:{show:false},
-            labels:{show:false},
+            axisTicks:{show:true},
+            labels:{show:true},
             type:"datetime",
             categories:data?.map(item => item.time_close)
           },
@@ -64,7 +64,7 @@ function Chart({coinId}:ChartProps) {
               formatter:(value) => `$ ${value.toFixed(2)}`
             }
           },
-          grid:{show:false},
+          grid:{show:true},
           stroke: {
             curve:"smooth",
             width:3

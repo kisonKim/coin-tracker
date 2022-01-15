@@ -40,9 +40,6 @@ first_data_at:string;
 last_data_at:string;
 }
 
-
-
-
 interface PriceData {
   id:string;
   name:string;
@@ -157,7 +154,7 @@ function Coin() {
               <Chart coinId={coinId} />
             </Route>
             <Route path={`/${coinId}/price`}>
-              <Price />
+              <Price coinId={coinId} />
             </Route>
           </Switch>
         </>
@@ -236,13 +233,12 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 7px 0px;
+  background-color: rgba(0, 0, 0, 0.5); 
   border-radius: 10px;
-  color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  color: ${(props) => props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+    padding: 7px 0px;
   }
 `;
 

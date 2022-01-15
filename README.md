@@ -4,4 +4,4 @@
 
 - [ ] price 탭 커스텀
 
-- [ ] chart를 candlestick chart 로 변경
+- [x] chart를 candlestick chart 로 변경
